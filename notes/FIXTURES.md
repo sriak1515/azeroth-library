@@ -1,0 +1,1 @@
+All authored Markdown under docs/ in this starter is demonstration/test content retained from v0.2. It is not the canonical campaign library. Keep it usable as fixtures; the first cloud task will separate it from viewer-owned pages and add an external source folder.
