@@ -30,3 +30,12 @@ Windows `.cmd` files were inspected and kept with CRLF checkout rules; they were
 5. Have an authoring session change content, then close/reopen Open. Confirm the update appears. Try a viewer snapshot update while retaining content-folder.txt and the same browser/profile/origin.
 
 Acceptance is by using the viewer. Code inspection is not required of the player.
+
+
+## In-page progress follow-up
+
+The owner’s Windows trial confirmed comfortable reading/navigation, working glossary passage return, and persistent theme/text-size/milestone choices after restart. Parchment is preferred and remains the default. The reported friction was the separate story-progress form.
+
+Added an in-page “Reached this point” control after the visible lore chapter text. It offers only the next milestone, saves through the existing preference path and keeps the chapter open. The full progress page remains available for adjustments. No fixture or external campaign Markdown changed.
+
+The updated demo production build and all seven focused Node tests passed locally. The added check covers one-step progression, glossary/passage gates, independent chapters, invalid saved IDs and the final milestone. The browser tool again failed to create a tab, so the new control’s actual visual/scroll behavior has not been verified interactively. One small owner check remains: click the in-page button at an unreached milestone and confirm the reveal feels natural without a scroll jump.

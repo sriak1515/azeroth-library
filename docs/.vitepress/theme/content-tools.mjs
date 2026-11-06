@@ -11,6 +11,11 @@ export function normalizeProgress(progress = {}, chapters = []) {
     return [chapter.chapterId, chapter.milestones.some(m => m.id === saved) ? saved : chapter.milestones[0].id]
   }))
 }
+export function nextMilestone(chapter, progress = {}) {
+  if (!chapter) return null
+  const current = normalizeProgress(progress, [chapter])[chapter.chapterId]
+  return chapter.milestones[chapter.milestones.findIndex(m => m.id === current) + 1] || null
+}
 export function milestoneIndex(chapterId, milestone, chapters) {
   const chapter = chapters.find(c => c.chapterId === chapterId)
   return chapter ? chapter.milestones.findIndex(m => m.id === milestone) : -1

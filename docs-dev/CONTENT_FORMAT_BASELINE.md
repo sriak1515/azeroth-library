@@ -61,7 +61,7 @@ A passage with a [normal glossary link](../glossary/iverron.md).
 </StoryGate>
 ```
 
-Required: title; layout lore; unique stable chapterId; unique numeric order. Without milestones, a chapter gets a single `start` milestone. The first listed milestone is selected initially; all ungated prose is readable. Later milestones are selected manually in Story progress. Optional navTitle, shortTitle and heroTitle override menu/breadcrumb/hero labels; otherwise title is used. Optional readingTime is a display string. Do not renumber IDs when inserting chapters or milestones; labels may change.
+Required: title; layout lore; unique stable chapterId; unique numeric order. Without milestones, a chapter gets a single `start` milestone. The first listed milestone is selected initially; all ungated prose is readable. Later milestones can be confirmed one at a time with “Reached this point” at the end of the visible chapter, or adjusted in Story progress. The in-page control uses the next milestone’s title as its prompt, so keep titles short, recognizable and limited to the event being confirmed; descriptions are not displayed there. No extra gate syntax or metadata is needed. Optional navTitle, shortTitle and heroTitle override menu/breadcrumb/hero labels; otherwise title is used. Optional readingTime is a display string. Do not renumber IDs when inserting chapters or milestones; labels may change.
 
 ## Progressive glossary entry
 

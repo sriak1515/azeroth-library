@@ -2,7 +2,7 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import { resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { buildCatalog, isKnown, normalizeProgress, migratePreferences } from '../docs/.vitepress/theme/content-tools.mjs'
+import { buildCatalog, isKnown, normalizeProgress, migratePreferences, nextMilestone } from '../docs/.vitepress/theme/content-tools.mjs'
 import { loadSourcePages } from '../scripts/content.mjs'
 import { checkContent } from '../scripts/check-content.mjs'
 import { createLibraryServer } from '../scripts/serve.mjs'
@@ -73,4 +73,22 @@ test('prebuilt reading server serves both chapters, fonts, 404s and rejects trav
   assert.equal(font.status, 200); assert.equal(font.headers.get('content-type'), 'font/woff')
   assert.equal((await fetch(base + '/no-such-page.html')).status, 404)
   assert.equal((await fetch(base + '/%2e%2e%2f%2e%2e%2fpackage.json')).status, 403)
+})
+
+
+test('in-page progress offers one stable next milestone, respects gates and stops at the end', () => {
+  const chapter = catalog.chapters.find(c => c.chapterId === ban)
+  const progress = { ...normalizeProgress({}, catalog.chapters), [shadow]: 'diranias-request' }
+  const entry = catalog.pages.find(p => p.title === 'Oben Rageclaw')
+  assert.equal(isKnown(entry, progress, catalog.chapters), false)
+  assert.equal(nextMilestone(chapter, progress).id, 'met-oben')
+  progress[ban] = nextMilestone(chapter, progress).id
+  assert.equal(isKnown(entry, progress, catalog.chapters), true)
+  assert.equal(isKnown({ requires: { [ban]: 'charm-examined' } }, progress, catalog.chapters), false)
+  assert.equal(progress[shadow], 'diranias-request')
+  assert.equal(nextMilestone(chapter, progress).id, 'charm-examined')
+  progress[ban] = nextMilestone(chapter, progress).id
+  assert.equal(nextMilestone(chapter, progress), null)
+  assert.equal(nextMilestone({ chapterId: 'one-step', milestones: [{ id: 'start' }] }, {}), null)
+  assert.equal(nextMilestone(chapter, { [ban]: 'invalid-saved-id' }).id, 'met-oben')
 })

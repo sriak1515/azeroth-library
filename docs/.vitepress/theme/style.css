@@ -28,3 +28,5 @@
 @media(max-width:650px){.hero{min-height:370px;padding:76px 26px 28px}.hero .hero-content{margin-right:0}}
 
 .demo-notice { margin: 0; padding: .65rem 1.5rem; text-align: center; font: 14px var(--font-ui, sans-serif); border-bottom: 1px solid var(--rule); }
+
+.in-page-progress{border-top:1px solid var(--line);margin-top:35px;padding-top:25px;font:14px/1.6 Interface,Arial,sans-serif;overflow-anchor:none}.in-page-progress .milestone-prompt{margin-top:10px;color:var(--muted)}.in-page-progress .milestone-title{font:24px/1.4 Chronicle,Georgia,serif;margin-top:10px}.in-page-progress .settings-actions{margin-top:18px}.in-page-progress .save-status{margin-top:12px;min-height:0}

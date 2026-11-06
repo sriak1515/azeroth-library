@@ -5,6 +5,7 @@ import { data as catalog } from './pages.data.mjs'
 import { library, initializeState, setTheme } from './state.mjs'
 import { isKnown } from './content-tools.mjs'
 import { reading, returnToReading, trackReading } from './reading.mjs'
+import ChapterProgress from './components/ChapterProgress.vue'
 
 const { page, frontmatter, theme } = useData()
 const router = useRouter()
@@ -16,12 +17,10 @@ const displayTitle = computed(() => !known.value ? 'A page still to be written' 
 const activeGroup = computed(() => lore.value || router.route.path === '/' ? 'chronicle' : glossary.value || frontmatter.value.layout === 'glossary-index' ? 'glossary' : frontmatter.value.layout === 'reference' ? 'reference' : frontmatter.value.group)
 const visibleChapters = computed(() => catalog.chapters.filter(c => isKnown(c, library.progress, catalog.chapters)))
 const currentChapter = computed(() => catalog.chapters.find(c => c.chapterId === frontmatter.value.chapterId))
-const currentRecord = computed(() => catalog.pages.find(p => p.url === router.route.path))
 const chapterPosition = computed(() => visibleChapters.value.findIndex(c => c.chapterId === currentChapter.value?.chapterId))
 const previousChapter = computed(() => chapterPosition.value > 0 ? visibleChapters.value[chapterPosition.value - 1] : null)
 const nextChapter = computed(() => chapterPosition.value >= 0 ? visibleChapters.value[chapterPosition.value + 1] : null)
 const introduced = computed(() => catalog.chapters.find(c => c.chapterId === frontmatter.value.introducedIn && isKnown(c, library.progress, catalog.chapters)))
-const hasUnrevealed = computed(() => currentRecord.value?.parts.some(part => !isKnown({ requires: part.requires }, library.progress, catalog.chapters)))
 const collection = computed(() => frontmatter.value.collection || 'The Chronicle')
 const number = chapter => chapter?.chapterNumber || String(chapter?.order || '').padStart(2, '0')
 const navigation = [ ['Chronicle', '/', 'chronicle'], ['Reference', '/reference.html', 'reference'], ['Glossary', '/glossary/', 'glossary'] ]
@@ -65,7 +64,7 @@ watch(displayTitle, title => { if (typeof document !== 'undefined') document.tit
           <header v-if="!lore" class="page-heading" :class="{ 'entry-heading': glossary }"><p class="eyebrow">{{ frontmatter.kind }}</p><h1>{{ displayTitle }}</h1><p v-if="frontmatter.description">{{ frontmatter.description }}</p></header>
           <div :class="['content-wrap', frontmatter.layout, { 'prose': lore || glossary, 'practical-content': !lore && !glossary }]">
             <Content class="md-body" />
-            <p v-if="lore && hasUnrevealed" class="chapter-pause">There is more to this chapter as you reach its story milestones.</p>
+            <ChapterProgress v-if="lore && currentChapter" :key="currentChapter.chapterId" :chapter="currentChapter" />
             <div v-if="glossary" class="entry-ending"><p v-if="introduced">First encountered in <a :href="introduced.url">{{ introduced.title }}</a>.</p><a class="vp-raw return-reading" :href="reading.path" @click="returnToReading($event, router)">← Return to your reading</a></div>
             <nav v-if="lore && (previousChapter || nextChapter)" class="chapter-pagination" aria-label="More chapters"><a v-if="previousChapter" :href="previousChapter.url"><small>Previous chapter</small>← {{ previousChapter.navTitle }}</a><span v-else></span><a v-if="nextChapter" :href="nextChapter.url"><small>Next chapter</small>{{ nextChapter.navTitle }} →</a></nav>
           </div>

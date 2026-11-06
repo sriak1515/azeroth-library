@@ -5,6 +5,8 @@
 3. Copy `content-folder.example.txt` to `content-folder.txt`. Put the full path to your separately supplied campaign folder on its single line. Paths with spaces and normal Windows backslashes work. Do not add quotes. Enable filename extensions in Explorer to check the filename.
 4. Double-click **Open-Azeroth-Library.cmd**. Allow the first npm installation to finish; it needs Internet. After that, reading uses local files. Keep the console open while reading. It opens **http://127.0.0.1:4174/**.
 
+At the end of a chapter’s visible text, **Reached this point** saves the next milestone and reveals its passages and glossary discoveries without leaving the chapter. Only click when that event has happened in your adventure. **Adjust progress** lets you go back or choose another point.
+
 You do not need to write Markdown. Your content comes from separate authoring sessions. The viewer never edits that folder. With no local setting, you see the clearly labelled sample collection. A bad configured path stops with a useful error.
 
 When content changes, close the console (Ctrl+C), then double-click Open again. Each start rebuilds. If the browser already has a tab open, refresh it after the build finishes.

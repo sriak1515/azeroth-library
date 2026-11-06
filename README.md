@@ -1,6 +1,6 @@
 # Azeroth Library
 
-A lightweight local VitePress/Vue Markdown reader for a World of Warcraft solo adventure. Warm parchment and dark stone, composed lore chapters, persistent desktop chapter navigation, dedicated glossary pages and practical reference layouts. Story progress is selected manually; it controls passages, glossary discoveries, outlines and search.
+A lightweight local VitePress/Vue Markdown reader for a World of Warcraft solo adventure. Warm parchment and dark stone, composed lore chapters, persistent desktop chapter navigation, dedicated glossary pages and practical reference layouts. Story progress is selected manually; it controls passages, glossary discoveries, outlines and search. At the end of the currently visible chapter, confirm the next milestone with **Reached this point** to reveal more without leaving the page. Use Story progress to adjust or go back.
 
 The repository owns the **viewer**. Your campaign is written in separate sessions and kept in a separate folder. `fixtures/demo/` is a labelled development collection, not the canonical campaign.
 
