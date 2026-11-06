@@ -15,7 +15,7 @@ The managed sandbox initially blocked network/loopback connections; installation
 
 ## Remote publication
 
-The completed commits are on local task branch `work`. A normal Git push was rejected with HTTP 403. The connected GitHub integration also rejected branch creation with `Resource not accessible by integration` (403). No PR or remote Actions run could be created. A local Windows ZIP, prepared PR description and Git bundle are provided under ignored `.snapshots/`. Repository write access is needed only to publish those commits and obtain the Actions artifact; the local ZIP is usable now.
+The task branch `work` is published in [pull request #1](https://github.com/sriak1515/azeroth-library/pull/1). Repository write access was restored after the initial HTTP 403 failures. At publication, no remote Actions run had been observed. The workflow is configured to build, test and package on Windows; that configuration is not evidence of an executed Windows check or an available artifact. Consult the PR checks for subsequent results. Nothing has been merged into main.
 
 ## Browser and Windows limits
 
