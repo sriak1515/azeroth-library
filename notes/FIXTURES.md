@@ -1,0 +1,1 @@
+Bundled campaign-like Markdown lives only in `fixtures/demo/`. It is demonstration/test content retained from v0.2, never the canonical campaign. `docs/` contains viewer-owned pages, theme and fonts. External collections are read into ignored `.library/docs/`; fixtures are not merged into them. See docs-dev/CONTENT_FORMAT_BASELINE.md for the independent authoring contract.

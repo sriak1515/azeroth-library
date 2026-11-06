@@ -1,0 +1,29 @@
+name: Check and Windows snapshot
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build -- --demo
+      - run: npm test
+      - run: npm run snapshot
+      - shell: pwsh
+        run: Compress-Archive -Path .snapshots/Azeroth-Library -DestinationPath .snapshots/Azeroth-Library-Windows.zip
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Azeroth-Library-Windows
+          path: .snapshots/Azeroth-Library-Windows.zip
+          if-no-files-found: error
+          retention-days: 30
