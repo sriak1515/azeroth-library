@@ -104,5 +104,5 @@ export function migratePreferences(saved, legacy, chapters) {
   }
   return { theme: source.theme === 'stone' ? 'stone' : 'parchment',
     size: [19, 21, 24].includes(Number(source.size)) ? Number(source.size) : 21,
-    progress: normalizeProgress(progress, chapters) }
+    progress: { ...progress, ...normalizeProgress(progress, chapters) } }
 }

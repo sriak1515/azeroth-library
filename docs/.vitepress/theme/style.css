@@ -26,3 +26,5 @@
 @media(min-width:1400px){.hero{min-height:370px}}
 @media(max-width:1150px){.hero{padding-left:30px;padding-right:30px}.hero .hero-content{margin-right:160px}}
 @media(max-width:650px){.hero{min-height:370px;padding:76px 26px 28px}.hero .hero-content{margin-right:0}}
+
+.demo-notice { margin: 0; padding: .65rem 1.5rem; text-align: center; font: 14px var(--font-ui, sans-serif); border-bottom: 1px solid var(--rule); }

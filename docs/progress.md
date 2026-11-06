@@ -9,4 +9,4 @@ search: false
 
 <ProgressSettings />
 
-<p class="source-line">This pilot records a separate reading milestone for each chapter in this browser. Your game and Zygor progress are separate.</p>
+<p class="source-line">This viewer records a separate reading milestone for each chapter in this browser. Your game and Zygor progress are separate.</p>

@@ -6,7 +6,7 @@ import { resolve, sep, extname } from 'node:path'
 import { spawn } from 'node:child_process'
 
 const project = fileURLToPath(new URL('../', import.meta.url))
-const defaultRoot = resolve(project, 'docs/.vitepress/dist')
+const defaultRoot = resolve(project, '.library/docs/.vitepress/dist')
 const mime = { '.html':'text/html; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.css':'text/css; charset=utf-8', '.json':'application/json; charset=utf-8', '.woff':'font/woff', '.woff2':'font/woff2', '.svg':'image/svg+xml', '.txt':'text/plain; charset=utf-8' }
 
 export function createLibraryServer(root = defaultRoot) {

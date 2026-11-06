@@ -4,11 +4,12 @@ import GlossaryIndex from './components/GlossaryIndex.vue'
 import ProgressSettings from './components/ProgressSettings.vue'
 import ReadingSettings from './components/ReadingSettings.vue'
 import LibrarySearch from './components/LibrarySearch.vue'
+import CollectionPages from './components/CollectionPages.vue'
 import './style.css'
 
 export default {
   Layout,
   enhanceApp({ app }) {
-    for (const [name, component] of Object.entries({ StoryGate, GlossaryIndex, ProgressSettings, ReadingSettings, LibrarySearch })) app.component(name, component)
+    for (const [name, component] of Object.entries({ StoryGate, GlossaryIndex, ProgressSettings, ReadingSettings, LibrarySearch, CollectionPages })) app.component(name, component)
   }
 }

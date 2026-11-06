@@ -12,5 +12,5 @@ export function initializeState(chapters) {
   persist()
 }
 export function setTheme(theme) { state.theme = theme === 'stone' ? 'stone' : 'parchment'; persist() }
-export function setProgress(progress, chapters) { state.progress = normalizeProgress(progress, chapters); persist() }
+export function setProgress(progress, chapters) { state.progress = { ...state.progress, ...normalizeProgress(progress, chapters) }; persist() }
 export function setSize(size) { state.size = [19, 21, 24].includes(Number(size)) ? Number(size) : 21; persist() }

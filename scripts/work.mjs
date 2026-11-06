@@ -12,5 +12,5 @@ if (!existsSync('node_modules/vitepress/package.json')) {
   const install = spawnSync(npm, ['ci', '--no-audit', '--no-fund'], options)
   if (install.status !== 0) process.exit(install.status || 1)
 }
-const result = spawnSync(npm, ['run', process.argv.includes('--new') ? 'new:page' : process.argv.includes('--build') ? 'build' : 'edit'], options)
+const result = spawnSync(npm, ['run', process.argv.includes('--build') ? 'build' : process.argv.includes('--edit') ? 'edit' : 'start'], options)
 process.exit(result.status || (result.error ? 1 : 0))

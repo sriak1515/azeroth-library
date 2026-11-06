@@ -1,25 +1,30 @@
-# Start the viewer project in Codex Cloud
+# Read on Windows
 
-## One-time repository seed
+1. Install Node.js LTS from https://nodejs.org/ (22 or newer recommended).
+2. Extract the snapshot to a writable folder, such as `Documents\Azeroth Library`.
+3. Copy `content-folder.example.txt` to `content-folder.txt`. Put the full path to your separately supplied campaign folder on its single line. Paths with spaces and normal Windows backslashes work. Do not add quotes. Enable filename extensions in Explorer to check the filename.
+4. Double-click **Open-Azeroth-Library.cmd**. Allow the first npm installation to finish; it needs Internet. After that, reading uses local files. Keep the console open while reading. It opens **http://127.0.0.1:4174/**.
 
-1. Create a private GitHub repository, for example `azeroth-library`.
-2. Extract this ZIP. Put the **contents** of `Azeroth-Library-Cloud-Starter/` at the repository root, so `package.json`, `AGENTS.md` and this file sit at the top level. Commit and push them. Uploading the ZIP itself as a repository file does not seed usable source code. If using a browser upload, include `.gitignore` as well.
-3. Create/select a Codex Cloud environment with access to this repository. Allow npm dependency installation. The project needs Node.js 20+; `npm ci` installs its pinned tools. No credentials, API keys or game-server access are needed.
-4. Start a task for that repository and paste the prompt below. The task can read all the design/context files directly from GitHub; it does not need this original conversation or access to ChatGPT Library.
+You do not need to write Markdown. Your content comes from separate authoring sessions. The viewer never edits that folder. With no local setting, you see the clearly labelled sample collection. A bad configured path stops with a useful error.
 
-## First task prompt
+When content changes, close the console (Ctrl+C), then double-click Open again. Each start rebuilds. If the browser already has a tab open, refresh it after the build finishes.
 
-```text
-Implement the first Azeroth Library viewer pass described in docs-dev/FIRST_TASK.md.
-Read AGENTS.md, design/DESIGN_DIRECTION.md and docs-dev/TECHNICAL_HANDOFF.md first.
+## Viewer updates
 
-Preserve the approved v0.2 design and working behavior. Keep the implementation light: this is a personal local Windows viewer. Actual Markdown content is authored elsewhere and must remain outside the viewer repository; bundled sample content is only fixtures.
+Close the console. Extract the new viewer snapshot over the same viewer folder and replace its viewer files. Keep `content-folder.txt`; snapshots never include it. Your campaign must remain outside the viewer folder. After an update, open a terminal in the viewer folder and run `npm ci` once, or delete only `node_modules` and Open will reinstall it. Then double-click Open.
 
-Implement external-folder loading and a simple Windows read/update workflow. Do not expand campaign content, redesign the site, add syncing/hosting, or build an authoring application. Make reasonable implementation choices without asking about routine details. Run the build and proportionate checks, then provide the changes for review and clear Windows trial instructions. State any Windows behavior you could not verify in the cloud.
-```
+Use the same browser/profile at `http://127.0.0.1:4174/` to retain progress, theme and text size. Do not clear its site data. A viewer update does not reset those preferences. Browser Back and “Back to your passage” return you to your place in the current reading tab.
 
-## What happens afterwards
+## If something goes wrong
 
-Review the result, merge it when satisfactory, and try the supplied viewer package on Windows with fixture/sample content. Report broken or awkward behavior back to the development session. Campaign writing happens in a different session against the documented content format. You do not need to write Markdown or supervise the implementation.
+- Missing Node: install Node LTS, then reopen the launcher.
+- Missing content folder: correct the one path in `content-folder.txt`. A disconnected drive must be connected first.
+- Content error: send the console error to your authoring/fix session. You do not have to repair Markdown yourself.
+- Port 4174 in use: close the earlier viewer console, then try again.
+- Browser did not open: open `http://127.0.0.1:4174/` yourself after the console says it is ready.
 
-Codex Cloud setup reference, checked 6 November 2026: https://learn.chatgpt.com/docs/cloud . Use the available environment/repository controls in your account; this package assumes no special ZIP-attachment feature in the cloud task composer.
+**Build-Reading-Version.cmd** rebuilds without opening a server. **Edit-Azeroth-Library.cmd** is an optional development launcher, not an authoring application. Both read the same folder setting. External content changes require a restart in this mode too.
+
+A snapshot includes a built, labelled demo. For an offline first look with just Node installed, run `node scripts/serve.mjs --open` in its folder. Normal Open installs the build tools and always rebuilds your selected collection.
+
+See README.md for GitHub Actions snapshot downloads and the separate authoring contract. Please try Open on Windows, visit a glossary entry and return to your passage, save a story milestone, switch appearance/text size, then restart after a content update. These are the remaining hands-on Windows checks.

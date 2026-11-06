@@ -6,14 +6,14 @@ import { library, initializeState, setTheme } from './state.mjs'
 import { isKnown } from './content-tools.mjs'
 import { reading, returnToReading, trackReading } from './reading.mjs'
 
-const { page, frontmatter } = useData()
+const { page, frontmatter, theme } = useData()
 const router = useRouter()
 const outline = ref([])
 const lore = computed(() => frontmatter.value.layout === 'lore')
 const glossary = computed(() => frontmatter.value.layout === 'glossary')
 const known = computed(() => (!Object.keys(frontmatter.value.requires || {}).length || library.ready) && isKnown(frontmatter.value, library.progress, catalog.chapters))
 const displayTitle = computed(() => !known.value ? 'A page still to be written' : frontmatter.value.entryTitle || frontmatter.value.title || 'Azeroth Library')
-const activeGroup = computed(() => lore.value ? 'chronicle' : glossary.value || frontmatter.value.layout === 'glossary-index' ? 'glossary' : frontmatter.value.group)
+const activeGroup = computed(() => lore.value || router.route.path === '/' ? 'chronicle' : glossary.value || frontmatter.value.layout === 'glossary-index' ? 'glossary' : frontmatter.value.layout === 'reference' ? 'reference' : frontmatter.value.group)
 const visibleChapters = computed(() => catalog.chapters.filter(c => isKnown(c, library.progress, catalog.chapters)))
 const currentChapter = computed(() => catalog.chapters.find(c => c.chapterId === frontmatter.value.chapterId))
 const currentRecord = computed(() => catalog.pages.find(p => p.url === router.route.path))
@@ -24,7 +24,8 @@ const introduced = computed(() => catalog.chapters.find(c => c.chapterId === fro
 const hasUnrevealed = computed(() => currentRecord.value?.parts.some(part => !isKnown({ requires: part.requires }, library.progress, catalog.chapters)))
 const collection = computed(() => frontmatter.value.collection || 'The Chronicle')
 const number = chapter => chapter?.chapterNumber || String(chapter?.order || '').padStart(2, '0')
-const navigation = [ ['Chronicle', '/', 'chronicle'], ['Druid playbook', '/guides/druid.html', 'guide'], ['Glossary', '/glossary/', 'glossary'], ['Troubleshooting', '/help/altbot.html', 'help'] ]
+const navigation = [ ['Chronicle', '/', 'chronicle'], ['Reference', '/reference.html', 'reference'], ['Glossary', '/glossary/', 'glossary'] ]
+const references = computed(() => catalog.pages.filter(p => p.layout === 'reference' && p.search && isKnown(p, library.progress, catalog.chapters)))
 let stopReading
 async function collectOutline() {
   await nextTick()
@@ -44,13 +45,14 @@ watch(displayTitle, title => { if (typeof document !== 'undefined') document.tit
       <nav class="topnav" aria-label="Main navigation"><a v-for="[label, href, group] in navigation" :key="href" :href="href" :aria-current="activeGroup === group ? 'page' : undefined">{{ label }}</a></nav>
       <div class="toolbar"><a class="search-trigger" href="/search.html" aria-label="Search library">⌕ <span>Search</span></a><div class="theme-switch" aria-label="Appearance"><button :aria-pressed="library.theme === 'parchment'" @click="setTheme('parchment')">Parchment</button><button :aria-pressed="library.theme === 'stone'" @click="setTheme('stone')">Stone</button></div></div>
     </header>
+    <p v-if="theme.demo" class="demo-notice">Demo collection · Sample chapters for trying the viewer. Select your external collection with content-folder.txt.</p>
     <div class="layout">
       <aside class="sidebar" aria-label="Chapter navigation">
         <div v-if="lore" class="volume-label"><span class="volume-number">{{ frontmatter.volumeNumber || '✧' }}</span><div><small>{{ collection }}</small><strong>{{ frontmatter.volume || 'Your chapters' }}</strong></div></div>
         <div v-else class="volume-label"><span class="volume-number">✧</span><div><small>The adventurer’s companion</small><strong>Field reference</strong></div></div>
         <nav v-if="lore" class="chapter-list" aria-label="Your chapters"><p class="eyebrow">Your chapters</p><a v-for="chapter in visibleChapters" :key="chapter.chapterId" class="chapter" :class="{ active: chapter.chapterId === currentChapter?.chapterId }" :href="chapter.url" :aria-current="chapter.chapterId === currentChapter?.chapterId ? 'page' : undefined"><span>{{ number(chapter) }}</span><span>{{ chapter.navTitle }}<small>{{ chapter.zone }}{{ chapter.chapterId === currentChapter?.chapterId ? (chapter.zone ? ' · Reading now' : 'Reading now') : '' }}</small></span></a></nav>
         <nav v-if="lore && outline.length" class="side-sections" aria-label="In this chapter"><p class="eyebrow">In this chapter</p><a v-for="heading in outline" :key="heading.id" :href="'#' + heading.id">{{ heading.title }}</a></nav>
-        <nav v-else-if="!lore" class="side-sections" aria-label="Reference pages"><p class="eyebrow">Within reach</p><a href="/guides/druid.html">Thaloren’s druid playbook</a><a href="/glossary/">The growing glossary</a><a href="/help/altbot.html">A little practical help</a><a :href="reading.path">Return to the chronicle →</a></nav>
+        <nav v-else-if="!lore" class="side-sections" aria-label="Reference pages"><p class="eyebrow">Within reach</p><a v-for="reference in references" :key="reference.url" :href="reference.url">{{ reference.navTitle }}</a><a href="/glossary/">The growing glossary</a><a href="/reference.html">All reference pages</a><a :href="reading.path">Return to the chronicle →</a></nav>
         <p class="side-foot">A place for the things<br>worth remembering.<span>Thaloren’s journey</span></p>
       </aside>
       <main class="main" id="main-content">

@@ -3,6 +3,8 @@ import { reactive } from 'vue'
 export const reading = reactive({ path: '/', y: 0 })
 let isLore = false
 export function initializeReading(chapters) {
+  reading.path = chapters[0]?.url || '/'
+  reading.y = 0
   try { const saved = JSON.parse(sessionStorage.getItem('azeroth-library-reading') || 'null'); if (chapters.some(c => c.url === saved?.path) && Number.isFinite(saved.y)) Object.assign(reading, saved) } catch {}
 }
 export function trackReading(router, chapters) {

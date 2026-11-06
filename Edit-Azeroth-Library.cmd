@@ -8,5 +8,5 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
-node scripts\work.mjs
+node scripts\work.mjs --edit
 if errorlevel 1 pause
